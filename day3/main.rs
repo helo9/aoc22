@@ -12,8 +12,8 @@ fn do_part1 () {
     let input_str = std::fs::read_to_string(INPUT_FILE).unwrap();
     
     let result: u32 = input_str.lines()
-             .map(|line| find_wrong_packed_item(line))
-             .map(|item| get_item_priority(item))
+             .map(find_wrong_packed_item)
+             .map(get_item_priority)
              .sum();
     
     println!("Result for part1 is {}!", result);

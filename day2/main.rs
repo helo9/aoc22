@@ -6,9 +6,9 @@ enum Shape {
     Scissors = 3,
 }
 
-impl Into<u32> for Shape {
-    fn into(self) -> u32 {
-        self as u32
+impl From<Shape> for u32 {
+    fn from(shape: Shape) -> u32 {
+        shape as u32
     }
 }
 
@@ -41,9 +41,9 @@ impl From<char> for Outcome {
     }
 }
 
-impl Into<u32> for Outcome {
-    fn into(self) -> u32 {
-        self as u32
+impl From<Outcome> for u32 {
+    fn from(outcome: Outcome) -> u32 {
+        outcome as u32
     }
 }
 
@@ -56,7 +56,7 @@ fn part1() {
     let input_str = std::fs::read_to_string("day2/input.txt").unwrap();
 
     let res: u32 = input_str.lines()
-                       .map(|line| calculate_score(line))
+                       .map(calculate_score)
                        .sum();
 
     println!("Part1 result is {}", res);
@@ -66,7 +66,7 @@ fn part2() {
     let input_str = std::fs::read_to_string("day2/input.txt").unwrap();
 
     let res: u32 = input_str.lines()
-                        .map(|line| calculate_score2(line))
+                        .map(calculate_score2)
                         .sum();
 
     println!("Part2 result is {}", res);
@@ -74,7 +74,7 @@ fn part2() {
 
 
 fn calculate_score(tip: &str) -> u32 {
-    let elves_shape = Shape::from(tip.chars().nth(0).unwrap());
+    let elves_shape = Shape::from(tip.chars().next().unwrap());
     let my_shape = Shape::from(tip.chars().nth(2).unwrap());
     
 
@@ -86,13 +86,13 @@ fn calculate_score(tip: &str) -> u32 {
 }
 
 fn calculate_score2(tip: &str) -> u32 {
-    let elves_shape = Shape::from(tip.chars().nth(0).unwrap());
+    let elves_shape = Shape::from(tip.chars().next().unwrap());
     let target_outcome = Outcome::from(tip.chars().nth(2).unwrap());
 
     let all_shapes = vec![Shape::Rock, Shape::Scissors, Shape::Paper];
 
     let my_shape = all_shapes.iter()
-                    .find(|shape| {does_first_shape_win(&shape, &elves_shape)==target_outcome})
+                    .find(|shape| {does_first_shape_win(shape, &elves_shape)==target_outcome})
                     .unwrap();
 
     let result: u32 = <Outcome as Into<u32>>::into(target_outcome) + <Shape as Into<u32>>::into(*my_shape);
