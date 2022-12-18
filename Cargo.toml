@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 regex = "1.7.0"
+indextree = "4.5.0"
 
 [[bin]]
 name = "day2"
@@ -23,3 +24,7 @@ path = "day4/main.rs"
 [[bin]]
 name = "day5"
 path = "day5/main.rs"
+
+[[bin]]
+name = "day7"
+path = "day7/main.rs"
